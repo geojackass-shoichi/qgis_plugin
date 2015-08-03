@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GSI Tiles on OpenLayers 2.13.1</title>
+<script src="http://portal.cyberjapan.jp/sys/OpenLayers-current/OpenLayers.js"></script>
+<style>
+  body {padding: 0; margin: 0}
+  html, body, #map {height: 100%; width: 100%;}
+  div.olControlAttribution {
+    padding: 3px;
+    color:#000000;
+    background-color:#ffffff;
+    background-color:rgba(230,255,255,0.7);
+    font-size:12px;
+    line-height:14px;
+    bottom:5px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+
+<body>
+<div id="map">
+<script>
+var projection3857 = new OpenLayers.Projection("EPSG:3857");
+var projection4326 =  new OpenLayers.Projection("EPSG:4326");
+
+var map = new OpenLayers.Map({
+  div: "map",
+  projection: projection3857,
+  displayProjection: projection4326,
+});
+
+map.addLayer(new OpenLayers.Layer.XYZ("標準地図", 
+  "http://cyberjapandata.gsi.go.jp/xyz/std/${z}/${x}/${y}.png", {
+    attribution: "<a href='http://portal.cyberjapan.jp/help/termsofuse.html' target='_blank'>国土地理院</a>",
+    maxZoomLevel: 17
+}));
+
+map.setCenter(new OpenLayers.LonLat(138.7313889, 35.3622222)
+  .transform(projection4326, projection3857), 10);
+</script>
+</body>
+</html>
